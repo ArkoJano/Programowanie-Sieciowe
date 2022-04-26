@@ -1,0 +1,45 @@
+    int open(const char *pathname, int flags, mode_t mode);
+
+    Wywołanie systemowe open() otwiera plik którego lokalizację podajemy w argumencie.  Jeśli
+    podany plik nie istnieje, za pomocą flagi O_CREAT możemy go utworzyć.
+
+    Wartością zwracaną przez open() jest deskryptor pliku, który jest 
+    nieujemną liczbą całkowitą. Deskryptor pliku zwrócony przez
+    udane wywołanie będzie deskryptorem pliku o najniższym numerze, który nie jest
+    aktualnie otwartym dla procesu.
+    Deskryptory o numerach 0, 1 i 2 związane są, ze standardowymi strumieniami: wejścia, wyjścia
+    i wyjścia błędów (symboliczne nazwy: STDIN_FILENO, STDOUT_FILENO i STDERR_FILENO).
+
+    Możemy podać w argumentach zestaw Flag które określają do czego dany plik będzie wykorzystywany:
+    - O_CREAT - jeśli nie znajdziemy pliku w danej ścieżce zostanie na nowo utworzony
+    - O_RDONLY - tylko odczyt z pliku
+    - O_WRONLY - tylko zapis do pliku
+    - O_EXCL - razem z O_CREAT przekaże błąd, jeśli plik już istnieje
+    - O_TRUNC - czyszczenie zawartości otwieranego pliku
+    - O_APPEND - otawrcie pliku w trybie dopisywania na jego końcu
+
+    ssize_t read(int fd, void *buf, size_t count);
+
+    Funkcja odczytująca z otwartego pliku (identyfikowanego za pomocą deksryptora podawanego
+    w pierwszym argumencie), określoną ilość bajtów (podawane w 3 argumencie) i zapisująca
+    odczytane dane do podanego bufora (w drugim argumencie). Jeśli funkcja zakończy się sukcesem,
+    to zwróci liczbę rzeczywiście odczytanych bitów.
+
+    ssize_t write(int fd, const void *buf, size_t count);
+    
+    Funkcja zapisująca do otwartego pliku (identyfikowanego za pomocą deksryptora podawanego
+    w pierwszym argumencie), określoną ilość bajtów (podawane w 3 argumencie) i zapisująca
+    odczytane dane z podanego bufora (w drugim argumencie).Jeśli funkcja zakończy się sukcesem,
+    to zwróci liczbę rzeczywiście zapisanych bitów.
+
+
+    int close(int fd);
+
+    Funkcja zwalniająca deskryptor otwartego pliku za pomocą funkcji open(), dzięki temu będzie
+    mógł on być ponownie wykorzystany. 
+
+    Opisy zgadzają się ponieważ nasz kurs Systemów Operacyjnych bazował właśnie na standardzie POSIX.
+
+    read() zwraca zero gdy:
+    - "wskaźnik" (offset) odczytywanego pliku znajduje się na jego końcu lub za nieujemną
+    - gdy podamy w 3 argumencie zero 

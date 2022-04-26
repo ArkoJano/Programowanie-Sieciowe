@@ -1,0 +1,32 @@
+Normalnie się łączą, pierwszy:
+
+dom@DESKTOP-T368VGV:.../Programowanie Sieciowe$ nc -v -u -l 20123
+Bound on 0.0.0.0 20123
+Connection received on localhost 56975
+
+drugi:
+dom@DESKTOP-T368VGV:.../2$ nc -u -v 127.0.0.1 20123
+Connection to 127.0.0.1 20123 port [udp/*] succeeded!
+hello
+
+wypisane w pierwszym:
+dom@DESKTOP-T368VGV:.../Programowanie Sieciowe$ nc -v -u -l 20123
+Bound on 0.0.0.0 20123
+Connection received on localhost 56975
+hello
+
+Zamknięcie drugiego:
+nadal nic się nie stało,
+Próba przesłania jakichś danych:
+zero błędu, nadal działa
+
+Zamknięcie pierwszego:
+brak błędów
+Próba przesłania jakichś danych:
+nadal brak błędów
+
+Czyli w porównaniu do TCP, przy UDP można zamknąć
+oba połączenia bez konsekwencji. Drugi może nawet
+cały czas działać, pierwszego w tym czasie można
+wyłączyć i znowu włączyć, po tym nadal normalnie 
+odbiera przesyłane dane.

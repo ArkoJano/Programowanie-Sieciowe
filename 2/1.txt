@@ -1,0 +1,13 @@
+z -l wszystko działa
+Po zabiciu pierwszego, drugi nadal wysyła bez problemu
+
+Bez pierwszego nie da się podłączyć drugiego:
+dom@DESKTOP-T368VGV:.../2$ nc -v 127.0.0.1 20123
+nc: connect to 127.0.0.1 port 20123 (tcp) failed: Connection refused
+
+Po zabiciu drugiego zamyka się też połączenie w pierwszym
+
+Wywołanie bez -l (listening) pierwszego daje komunikat braku portu:
+dom@DESKTOP-T368VGV:.../Programowanie Sieciowe$ nc -v 20123
+nc: missing port number
+

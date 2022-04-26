@@ -1,0 +1,18 @@
+-v - Określenie informacji wyjściowych w trybie verbose.
+-l - mówi systemowi żeby zaczął nasłuchiwać dla połączeń TCP i UDP
+     na konkretnym porcie
+-u - określa użycie UNIX Domain Sockets. Jeśli nie dodamy do polecenia
+     -l staje się klientem AF_UNIX, ale jeśli jednak dodamy to go tworzymy. 
+     Wymaga podania argumentu który jest poprawną scieżką domeny. Nie może 
+     to być nazwa hosta czy port.
+-C - dołącza na koniec CRLF jako końcówke lini.
+     CR - carriage return (13, "\r")
+     LF - line feed (10, "\n")
+--crlf - to samo co wyżej
+
+     Bez dodania na końcu tych dwóch znaków program może byc podatny
+     na atak "CRLF injection". np. w protokole HTTP sekwencja CR-LF
+     jest używana do wykonywania poleceń. Może to spowodować że jeśli
+     nasza aplikacja ma jakieś operacje zapisu/odczytu to atakujący 
+     może w tam włożyć właśnie CRLF i po tym wrzucić jakąś metodę
+     atakującą do pliku która się wykona.
