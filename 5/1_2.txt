@@ -1,0 +1,43 @@
+Komunikacja pomiędzy serwerem a klientem odbywa się za pomocą protokołu TCP.
+
+Serwer tworzy gniazdo z przypisanym adresem i portem 2022 na którym rozpoczyna nasłuchiwanie.
+Klient podejmuje próbę podłączenia do serwera, w przypadku sukcesu, serwer akceptuje połączenie
+sygnalizującą gotowość do przyjęcia komunikatu.
+Komunikaty są odbierane w pętli do czasu odebrania wszystkich, lub natrafienia na niepoprawny
+znak.
+
+Każdy komunikat rozpoczyna się liczbą. Dopuszcza sie możliwość wysłania kilku komunikatów
+na raz (w jednej linii), w tym przypadku komunikaty muszą zostać oddzielone dwuznakiem "\r\n".
+Serwer otrzymuje komunikat w formie ciągu znaków, sprawdzając ich poprawność, rozdzielając
+poszczególne komunikaty (oddzielone \r\n) jako ciągi znaków gotowe do wykonania na nich obliczeń.
+W otrzymanym pakiecie danych dopuszczalne są tylko następujące znaki: "[0-9] \r\n" 
+(niedopuszczalne jest stosowanie liczb ujemnych).
+W przypadku natrafienia na niepoprawny znak wynik danego komunikatu jest ustawiany na ERROR.
+Po wykonaniu obliczeń tworzona jest wiadomość wynikowa w postaci:
+"
+#1 result: [wynik obliczeń 1 komunikatu]\r\n
+#2 result: [wynik obliczeń 2 komunikatu]\r\n
+#3 result: [wynik obliczeń 3 komunikatu]\r\n
+.
+.
+.
+#n result: [wynik obliczeń n-tego komunikatu]\r\n
+"
+
+która jest wysyłana do klienta.
+
+W przypadku otrzymania pustego komunikatu wynik obliczeń danego komunikatu jest ustawiany na ERROR.
+W przypadku otrzymania tylko jednego poprawnego znaku wynik obliczeń danego komunikatu 
+jest ustawiany na ERROR.
+
+Komunikaty są odbierane w pakietach nie większych niż 1024 bajty (wraz z \r\n). Dłuższe 
+komunikty mogą zostać podzielone na pakiety o wielkości 1024, ale muszą być zakończone
+\r\n, w przypadku jego braku wynik obliczeń danego komunikatu jest ustawiany na ERROR.
+Każdy otrzymany komunikat najpierw jest sprawdzany czy zawiera tylko dopuszczalne znaki.
+Jeśli natrafimy na niepoprawny znak, wynik obliczeń danego komunikatu jest ustawiany na ERROR
+a połączenie z klientem zostaje przerwane.
+
+
+Wiadomość zwrotna dla klienta dla powyższych przypadków powinna być w formie:
+"#1 result: ERROR\r\n"
+
